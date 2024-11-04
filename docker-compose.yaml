@@ -1,16 +1,30 @@
-version: '3.8'
 services:
-  postgres_dev:
+  postgres_db:
     image: postgres:15.6
     restart: always
+    container_name: postgres_db
     environment:
       - POSTGRES_USER=root
+      - POSTGRES_DB=study_hub
       - POSTGRES_PASSWORD=root
-      - POSTGRES_DB=coding_club
     volumes:
       - postgres-dev-data:/var/lib/postgresql/data
     ports:
       - '5434:5432'
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    container_name: nest_application
+    ports:
+      - '8080:8080'
+    depends_on:
+      postgres_db:
+        condition: service_started
+    volumes:
+      - ./src:/app/src
 
 volumes:
   postgres-dev-data:
