@@ -1,5 +1,4 @@
-import { Prisma } from '@prisma/client';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 import User from '@domain/core/entities/user.entity';
 import IUserRepository from '@domain/core/abstractions/services/database-service/repositories/user.abstract.repository';
@@ -15,26 +14,14 @@ class UserRepository implements IUserRepository {
     ) {}
 
     async createRecord(data: User): Promise<any> {
-        try {
-            const createdRecord = await this._prisma.user.create({
-                data: {
-                    email: data.email,
-                    password: data.password,
-                },
-            });
+        const createdRecord = await this._prisma.user.create({
+            data: {
+                email: data.email,
+                password: data.password,
+            },
+        });
 
-            return this._userRepositoryMapper.mapDataObjectToEntity(createdRecord);
-        } catch (error) {
-            if (error instanceof Prisma.PrismaClientKnownRequestError) {
-                if (error.code === 'P2002') {
-                    const targetFields = error.meta?.target;
-
-                    if (Array.isArray(targetFields) && targetFields.includes('email')) {
-                        throw new BadRequestException('Email is already in use');
-                    }
-                }
-            }
-        }
+        return this._userRepositoryMapper.mapDataObjectToEntity(createdRecord);
     }
 
     async getRecordById(id: string): Promise<User | null> {

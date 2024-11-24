@@ -1,12 +1,14 @@
-import * as cookieParser from 'cookie-parser';
-
 import { NestFactory, Reflector } from '@nestjs/core';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 
-import ApplicationModule from './application/application.module';
+import * as cookieParser from 'cookie-parser';
+
+import ApplicationModule from '@application/application.module';
 
 async function bootstrap() {
     const app = await NestFactory.create(ApplicationModule);
+
+    ApplicationModule.setupSwagger(app);
 
     app.use(cookieParser());
     app.useGlobalPipes(new ValidationPipe());
