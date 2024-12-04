@@ -4,15 +4,16 @@ import { Response, Request } from 'express';
 import { Injectable, NestInterceptor, ExecutionContext, CallHandler, HttpStatus } from '@nestjs/common';
 
 import { API_STATUS_MESSAGES } from '@application/documentation';
-import ApiSuccessResponseDto from '@application/dtos/sucess-response.dto';
+import ApiSuccessResponseDto from '@application/dtos/common/sucess-response.dto';
+import { IControllerResponse } from '@application/core/base.abstract.controller';
 
 @Injectable()
-class ResponseStandardizerInterceptor<T> implements NestInterceptor<T, ApiSuccessResponseDto<T>> {
+class ResponseStandardizerInterceptor<T> implements NestInterceptor<IControllerResponse<T>, ApiSuccessResponseDto<T>> {
     intercept(context: ExecutionContext, next: CallHandler): Observable<ApiSuccessResponseDto<T>> {
-        return next.handle().pipe(map((res: T) => this.successResponseHandler(res, context)));
+        return next.handle().pipe(map((res: IControllerResponse<T>) => this.successResponseHandler(res, context)));
     }
 
-    private successResponseHandler(responseData: T, context: ExecutionContext): ApiSuccessResponseDto<T> {
+    private successResponseHandler(responseData: IControllerResponse<T>, context: ExecutionContext): ApiSuccessResponseDto<T> {
         const ctx = context.switchToHttp();
 
         const request = ctx.getRequest<Request>();
@@ -33,8 +34,9 @@ class ResponseStandardizerInterceptor<T> implements NestInterceptor<T, ApiSucces
                     params: request.params,
                     body: process.env.NODE_ENV !== 'production' ? request.body : undefined,
                 },
+                pagination: responseData.meta?.pagination ? responseData.meta?.pagination : undefined,
             },
-            data: responseData,
+            data: responseData.data,
         };
     }
 }

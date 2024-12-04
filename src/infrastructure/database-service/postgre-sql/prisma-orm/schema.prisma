@@ -19,6 +19,24 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
+model Intake {
+  id String @id @default(uuid()) @db.Uuid
+
+  name                String
+  launchDate          DateTime
+  type                IntakeType
+  isOpened            Boolean    @default(false)
+  applicationDeadline DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum IntakeType {
+  WEEKEND
+  WEEKDAY
+}
+
 enum UserRole {
   USER
   ADMIN

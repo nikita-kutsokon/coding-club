@@ -7,6 +7,6 @@ export class SwaggerModule {
         const config = new DocumentBuilder().setTitle('StudyHub API Documentation').setDescription('API description').setVersion('1.0').build();
 
         const document = NestSwaggerModule.createDocument(app, config);
-        NestSwaggerModule.setup('api', app, document);
+        NestSwaggerModule.setup('api/docs', app, document);
     }
 }
