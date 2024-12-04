@@ -4,7 +4,7 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus } from '@nestjs/common';
 
 import { API_STATUS_MESSAGES } from '@application/documentation';
-import ApiErrorResponseDto from '@application/dtos/error-response.dto';
+import ApiErrorResponseDto from '@application/dtos/common/error-response.dto';
 
 const PRISMA_ERROR_MAP: Record<string, { statusCode: number; message: string } | undefined> = {
     P2000: { statusCode: HttpStatus.BAD_REQUEST, message: 'Invalid data provided' },

@@ -17,18 +17,18 @@ export class RequestInfoDto {
     body?: Record<string, any>;
 }
 
-class PaginationDto {
+export class PaginationDto {
     @ApiProperty({ example: 100 })
-    totalRecords: number;
+    total: number;
 
     @ApiProperty({ example: 10 })
-    totalPages: number;
+    page: number;
+
+    @ApiProperty({ example: 10 })
+    limit: number;
 
     @ApiProperty({ example: 2 })
-    currentPage: number;
-
-    @ApiProperty({ example: 10 })
-    pageSize: number;
+    totalPages: number;
 }
 
 export class MetaDto {

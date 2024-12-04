@@ -1,7 +1,7 @@
 import { HttpStatus } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
 
-import ApiSuccessResponseDto, { MetaDto } from '@application/dtos/sucess-response.dto';
+import ApiSuccessResponseDto, { MetaDto } from '@application/dtos/common/sucess-response.dto';
 
 import { API_STATUS_MESSAGES } from '@application/documentation/swagger/api-status-messages';
 

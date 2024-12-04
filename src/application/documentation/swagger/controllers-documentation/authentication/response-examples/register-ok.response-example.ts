@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 import { UserRole } from '@domain/core/entities/user.entity';
 
-import { MetaDto } from '@application/dtos/sucess-response.dto';
+import { MetaDto } from '@application/dtos/common/sucess-response.dto';
 import { RegistrationResponseDto } from '@application/dtos/authentication';
 
 import { API_STATUS_MESSAGES } from '@application/documentation/swagger/api-status-messages';
